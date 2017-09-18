@@ -1,11 +1,13 @@
-FROM alpine:3.5
+FROM alpine
 
-MAINTAINER Philipp Schmitt <philipp@schmitt.co>
+MAINTAINER Andrey Sizov <andrey.sizov@jetbrains.com>, based on Philipp Schmitt <philipp@schmitt.co>
 
 ENV RCLONE_VERSION=current
 ENV ARCH=amd64
 
-RUN apk -U add ca-certificates fuse \
+RUN apk update \
+    && apk -U add ca-certificates wget openssl \
+    && update-ca-certificates \
     && rm -rf /var/cache/apk/* \
     && cd /tmp \
     && wget -q http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${ARCH}.zip \
